@@ -1,10 +1,9 @@
 <?php
 if(isset($_POST['submit'])){
 	$rand=rand(111111111,999999999);
-	move_uploaded_file($_FILES['file']['tmp_name'],'upload/'.$rand.$_FILES['file']['name']);
+	move_uploaded_file($_FILES['file']['tmp_name'], $rand.$_FILES['file']['name']);
 	
-	$file="YourLink/".$rand.$_FILES['file']['name'];
-	
+	$file="[WEBSITE-LINK]/".$rand.$_FILES['file']['name'];	
 	$ch = curl_init();
 	curl_setopt($ch, CURLOPT_URL, 'https://api.remove.bg/v1.0/removebg');
 	curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
@@ -19,10 +18,10 @@ if(isset($_POST['submit'])){
 	curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
 	$result = curl_exec($ch);
 	curl_close($ch);
-	$fp=fopen('remove/'.$rand.'.png',"wb");
+	$fp=fopen($rand.'.png',"wb");
 	fwrite($fp,$result);
 	fclose($fp);
-	echo "<img src='remove/$rand.png'>";
+	echo "<img src='$rand.png'>";
 }
 ?>
 <form method="post" enctype="multipart/form-data">
